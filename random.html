@@ -1,47 +1,53 @@
 <!DOCTYPE html>
 <html>
 <body>
-
+    <script>
+        const MAX_NUM = 49;
+        const MAX_CHOICES = 6;
+        const SHUFFLE = 100;
+        var elements = [];
+        
+        function generateRandom()
+        {
+        // load all the numbers into an array so that we can start shuffling them for randomness
+        for (i=0; i<MAX_NUM; i++){
+            elements.push(i+1);
+        }
+        
+        // Shuffle the deck
+        for (i=0; i<SHUFFLE; i++){
+            selected = Math.floor(Math.random() * elements.length);
+            movevar = elements[selected];
+            elements.splice(selected, 1);
+            elements.push(movevar);
+        }
+        
+        // Select the numbers from the array
+        var choices = [];
+        
+        for (i=0; i<MAX_CHOICES; i++){
+            choice = Math.floor(Math.random() * elements.length);
+            choices.push(elements[choice]);
+        }
+        
+        // Sort the results and then display them
+        choices.sort(function(a, b){return a - b});
+        document.getElementById("output").innerHTML = "<p>Number of items in array = " + MAX_NUM + "</p>";
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML + "<p>Number of choices = " + MAX_CHOICES + "</p>";
+        document.getElementById("output").innerHTML = document.getElementById("output").innerHTML + choices;
+        }
+        </script>
+        
 <h2>JavaScript Math</h2>
 
 <p>This script uses Random and arrays to setup an array with a sequential set of numbers and then randomly choose a set of numbers from the array:</p>
 
+<form>
+    <button type="button" onclick="generateRandom()">Generate Randon Numbers</button>
+  </form>
+
 <p id="output"></p>
 
-<script>
-const MAX_NUM = 49;
-const MAX_CHOICES = 6;
-const SHUFFLE = 100;
-var elements = [];
-
-// load all the numbers into an array so that we can start shuffling them for randomness
-for (i=0; i<MAX_NUM; i++){
-    elements.push(i+1);
-}
-
-// Shuffle the deck
-for (i=0; i<SHUFFLE; i++){
-    selected = Math.floor(Math.random() * elements.length);
-    movevar = elements[selected];
-    elements.splice(selected, 1);
-    elements.push(movevar);
-}
-
-// Select the numbers from the array
-var choices = [];
-
-for (i=0; i<MAX_CHOICES; i++){
-    choice = Math.floor(Math.random() * elements.length);
-    choices.push(elements[choice]);
-}
-
-// Sort the results and then display them
-choices.sort(function(a, b){return a - b});
-document.getElementById("output").innerHTML = "<p>Number of items in array = " + MAX_NUM + "</p>";
-document.getElementById("output").innerHTML = document.getElementById("output").innerHTML + "<p>Number of choices = " + MAX_CHOICES + "</p>";
-document.getElementById("output").innerHTML = document.getElementById("output").innerHTML + choices;
-
-</script>
 
 </body>
 </html>
