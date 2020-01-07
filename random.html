@@ -10,57 +10,47 @@
         {
             
             var elements = [];
-            
-            console.log("max > " + maxnum + " : " + maxchoice);
-            
-            // load all the numbers into an array so that we can start shuffling them for randomness
-            for (i=0; i<maxnum; i++){
-                elements.push(i+1);
-            }
-            
-            console.log("elements > " + elements.length + " : " + elements);
-
-            // Shuffle the deck
-            for (i=0; i<SHUFFLE; i++){
-                selected = Math.floor(Math.random() * elements.length);
-                movevar = elements[selected];
-                elements.splice(selected, 1);
-                elements.push(movevar);
-            }
-            
-            console.log("elements > " + elements.length + " : " + elements);
-
-            // Select the numbers from the array
             var choices = [];
             
-            for (i=0; i<maxchoice; i++){
-                choice = Math.floor(Math.random() * elements.length);
-                choices.push(elements[choice]);
-                console.log(elements[choice]);
-                elements.splice(choice, 1);
+            if (maxnum > maxchoice) {
+                // load all the numbers into an array so that we can start shuffling them for randomness
+                for (i=0; i<maxnum; i++){
+                    elements.push(i+1);
+                }
+                
+                // Shuffle the deck
+                for (i=0; i<SHUFFLE; i++){
+                    selected = Math.floor(Math.random() * elements.length);
+                    movevar = elements[selected];
+                    elements.splice(selected, 1);
+                    elements.push(movevar);
+                }
+                
+                // Select the numbers from the array
+                for (i=0; i<maxchoice; i++){
+                    choice = Math.floor(Math.random() * elements.length);
+                    choices.push(elements[choice]);
+                    elements.splice(choice, 1);
+                }
+            
+                // Sort the results and then display them
+                choices.sort(function(a, b){return a - b});
             }
-        
-            // Sort the results and then display them
-            choices.sort(function(a, b){return a - b});
-
-            console.log("elements > " + elements.length + " : " + elements);
 
             return choices;
             
         }
 
-        function displayRandom()
+        function displayRandom(maxnum, maxchoices, outputlocation)
         {
 
-            var maxnum = Number(document.getElementById("maxNumbers").value);
-            var maxchoices = Number(document.getElementById("maxChoices").value);
             var randomChoices = generateRandom(maxnum, maxchoices);
             
             var output = "<p>Number of items in array = " + maxnum + "</p>";
             output = output + "<p>Number of choices = " + maxchoices + "</p>";
             output = output + randomChoices;
 
-            document.getElementById("output").innerHTML = output;
+            outputlocation.innerHTML = output;
 
         }
 
@@ -74,7 +64,7 @@
     How many numbers to choose from <input type="number" id="maxNumbers" min="1" max="100"> <br/>
     How many choices <input type="number" id="maxChoices" min="1" max="100"> <br/>
     <hr/>
-    <button type="button" onclick="displayRandom()">Generate Randon Numbers</button>
+    <button type="button" onclick="displayRandom(document.getElementById('maxNumbers').value, Number(document.getElementById('maxChoices').value), document.getElementById('output'))">Generate Randon Numbers</button>
   </form>
 
   <hr/>
